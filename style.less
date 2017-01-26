@@ -1,0 +1,69 @@
+/**
+ * Import base style
+ */
+@import "../mall/base.less";
+
+/**
+ * Here comes specific style for a certain test program.
+ */
+
+#flash{position:relative;height:300px;}
+
+ #b1{
+   position:absolute;
+   left: 30px;
+ 	 top: 50px;
+ }
+
+.dice{width:64px;height:64px;background-image:url(img/sprite_mickey_mos.png);
+  &.one{background-position:0 0;}
+   &.five{background-position:64px 0;}
+   &.four{background-position:128px 0px;}
+  &.six{background-position:192px 0;}
+  &.three{background-position:256px 0;}
+  &.two{background-position:320px 0;}
+}
+
+#background {
+	position: absolute;
+	left: 0px;
+	top: 160px;
+}
+
+#topvalue {
+	position: absolute;
+	left: 0px;
+	top: 120px;
+}
+
+#topvalue2 {
+	position: absolute;
+	left: 0px;
+	top: 140px;
+}
+
+#top {
+	position: absolute;
+	left: 0px;
+	top: 180px;
+}
+
+#top2 {
+	position: absolute;
+	left: 0px;
+	top: 200px;
+}
+
+#gameover {
+	position: absolute;
+	left: 50px;
+	top: 220px;
+}
+
+#inoutput {
+	position: absolute;
+	left: 50px;
+	top: 650px;
+}
+
+canvas{border:1px solid #999;background-color:#fff;}
