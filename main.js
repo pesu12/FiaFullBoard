@@ -6,7 +6,7 @@ $(document).ready(function(){
 
   'use strict';
 
-  var pTop = [1,1]; //pTop with start positions
+  var pTop = [0,0]; //pTop with start positions
   var pToplength = pTop.length;
 
   var posFinished = 20;
@@ -163,29 +163,29 @@ $(document).ready(function(){
 
       //Color for final stage
       if (topPos>40 && topPos<45) {
-          context.fillStyle = 'blue';
+        context.fillStyle = 'blue';
       }
 
 
-     //Colof for final position
+      //Colof for final position
       if (topPos === 45) {
-          context.fillStyle = 'white';
+        context.fillStyle = 'white';
       }
 
-     //color for left middle positions
+      //color for left middle positions
       if (topPos > 45 && topPos < 50) {
-          context.fillStyle = 'yellow';
+        context.fillStyle = 'yellow';
       }
 
       //color for upper middle positions
-       if (topPos > 49 && topPos <54) {
-           context.fillStyle = 'red';
-       }
+      if (topPos > 49 && topPos <54) {
+        context.fillStyle = 'red';
+      }
 
-       //color for right  middle positions
-        if (topPos > 54 && topPos <58) {
-            context.fillStyle = 'green';
-        }
+      //color for right  middle positions
+      if (topPos > 54 && topPos <58) {
+        context.fillStyle = 'green';
+      }
 
 
       context.fill();
@@ -202,18 +202,39 @@ $(document).ready(function(){
 
     canvas = document.getElementById('canvas1');
     context = canvas.getContext('2d');
-    if (pos === 0) {
-      centerY = (canvas.height / 2) -10;
-      context.fillStyle = top1Color;
-    }
 
-    if (pos === 1) {
-      centerY = (canvas.height / 2) +10;
-      context.fillStyle = top2Color;
-    }
+    //first position outside the game-area
+    if(topValue===0) {
+      if (pos === 0) {
+        centerY = 500;
+        context.fillStyle = top1Color;
+      }
+      if (pos === 1) {
+        centerY = 530;
+        context.fillStyle = top2Color;
+      }
+      centerX = 44*3;
+      radius = 10;
+    } else {
+      //second position and up ihe game area
+      if (pos === 0) {
+        context.fillStyle = top1Color;
+      }
 
-    centerX = 44*topValue;
-    radius = 10;
+      if (pos === 1) {
+        context.fillStyle = top2Color;
+      }
+
+      centerX = 0;
+      centerY = 0;
+
+      if (topValue<6) {
+        centerX = 300 - 44;
+        centerY = 600 - 44*(topValue);
+      }
+
+      radius = 10;
+    }
 
     context.beginPath();
     context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
@@ -245,12 +266,12 @@ $(document).ready(function(){
   function checkForCollision(currentTop) {
     if (currentTop === 0) {
       if(pTop[0] === pTop[1]){
-        pTop[1]=1;
+        pTop[1]=0;
       }
     }
     if (currentTop === 1) {
       if(pTop[1] === pTop[0]) {
-        pTop[0]=1;
+        pTop[0]=0;
       }
     }
   }
@@ -267,7 +288,7 @@ $(document).ready(function(){
 
   function logics(topNo, dValue) {
     // Top is in field?
-    if (pTop[topNo] > 1) {
+    if (pTop[topNo] > 0) {
       //Can he move
       if (pTop[topNo] + dValue <= posFinished) {
         //Move Top
@@ -286,7 +307,7 @@ $(document).ready(function(){
         checkForCollision(topNo);
       } else {
         //If not value 1 or 6 we are still not in field
-        pTop[topNo] = 1;
+        pTop[topNo] = 0;
       }
     }
   }
@@ -355,17 +376,17 @@ bgElement.innerText = bgPositions;
 */
 
 //display default top and default top value
-//displayTop(1,0);      //display top 0 pos 1
-displayTopValue(1,0); //display top 0 value 1
-//displayTop(1,1);      //display top 1 pos 1
-displayTopValue(1,1); //display top 1 value 1
+//displayTop(0,0);      //display top 0 pos 0
+displayTopValue(0,0); //display top 0 value 0
+//displayTop(0,1);      //display top 1 pos 0
+displayTopValue(0,1); //display top 1 value 0
 
 var canvas = document.getElementById('canvas1');
 
 //Draw bgCircles
 drawBgCircles();
 
-//draw top circle for top 1 in pos 1 (default)
-drawTopCircle(1,0);
-drawTopCircle(1,1);
+//draw top circle for top 1 in pos 0 (default)
+drawTopCircle(0,0);
+drawTopCircle(0,1);
 });
