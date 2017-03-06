@@ -206,22 +206,29 @@ $(document).ready(function(){
     //first position outside the game-area
     if(topValue===0) {
       if (pos === 0) {
-        centerY = 500;
+        centerY = 510;
         context.fillStyle = top1Color;
       }
       if (pos === 1) {
-        centerY = 530;
+        centerY = 540;
         context.fillStyle = top2Color;
       }
       centerX = 44*3;
       radius = 10;
     } else {
+
       //second position and up ihe game area
       if (pos === 0) {
+        //Clear position 0
+        context.clearRect(120, 498, 24, 24);
+        //Fill with top1Color
         context.fillStyle = top1Color;
       }
 
       if (pos === 1) {
+        //Clear position 0
+        context.clearRect(120, 528, 24, 24);
+        //Fill with top1Color
         context.fillStyle = top2Color;
       }
 
@@ -339,9 +346,9 @@ $(document).ready(function(){
       //Display topvalue
       displayTopValue(pTop[i],i);
     }
-
     //Stop on click
   }
+
 
   //Declare variables.
   var mmi;
