@@ -9,7 +9,7 @@ $(document).ready(function(){
   var pTop = [0,0]; //pTop with start positions
   var pToplength = pTop.length;
 
-  var posFinished = 20;
+  var posFinished = 45;
   var top1Color = "yellow";
   var top2Color = "orange";
 
@@ -235,9 +235,104 @@ $(document).ready(function(){
       centerX = 0;
       centerY = 0;
 
+      //The player is out on the field
       if (topValue<6) {
         centerX = 300 - 44;
         centerY = 600 - 44*(topValue);
+      }
+      if (topValue>5 && topValue<10) {
+        centerX = 300 - (44* (topValue-4));
+        centerY = 600 - 44*5;
+      }
+
+      //middle left
+      if (topValue === 10) {
+        centerX = 300 - (44*5);
+        centerY = 600 - 44*6;
+      }
+
+      //middle left upper left to right
+      if (topValue>10 && topValue<16) {
+        centerX = 300 - (44*5) + ((topValue-11) * 44);
+        centerY = 600 - 44*7;
+      }
+
+      //top left bottom to up
+      if (topValue>15 && topValue<20) {
+        centerX = 300 - 44;
+        centerY = 600 - (44* (topValue-8));
+      }
+
+      //top
+      if (topValue === 20) {
+        centerX = 300;
+        centerY = 600 - 44*11;
+      }
+
+      //top right up to bottom
+      if (topValue>20 && topValue<25) {
+        centerX = 300 + 44;
+        centerY = 600 - (44*11) + ((topValue-21) * 44);
+      }
+
+      //middle right upper
+      if (topValue>24 && topValue<30) {
+        centerX = 300 + 44 + ((topValue-25) * 44);
+        centerY = 600 - (7*44);
+      }
+
+      //middle right
+      if (topValue === 30) {
+        centerX = 300 + (44*5);
+        centerY = 600 - 44*6;
+      }
+
+      //Middle left lower left to right
+      if (topValue>30 && topValue<36) {
+        centerX = 300 + (44*5) - (44* (topValue-31));
+        centerY = 600 - 44*5;
+      }
+
+      //bottom right up to down
+      if (topValue>35 && topValue<40) {
+        centerX = 300 + 44;
+        centerY = 600 - (44*4) + ((topValue-36) * 44);
+      }
+
+      //middle bottom
+      if (topValue === 40) {
+        centerX = 300;
+        centerY = 600 - 44;
+      }
+
+      //up to final
+      if (topValue>40  && topValue <45) {
+        centerX = 300;
+        centerY = 600 - 44*(topValue-39);
+      }
+
+      //final point
+      if (topValue === 45) {
+        centerX = 300;
+        centerY = 600 - 44*6;
+      }
+
+      //left middle points
+      if (topValue>45 && topValue<50) {
+        centerX = 300 - (44* (topValue-45));
+        centerY = 600 - 44*6;
+      }
+
+      //upper middle points
+      if (topValue>49 && topValue<54) {
+        centerX = 300;
+        centerY = 600 - (44* (topValue-43));
+      }
+
+      //right middle points
+      if (topValue>53) {
+        centerX = 300 + 44 + ((topValue-54) * 44);
+        centerY = 600 - (6*44);
       }
 
       radius = 10;
