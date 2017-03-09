@@ -40,159 +40,158 @@ $(document).ready(function(){
       var centerY = 0;
       var radius = 20;
 
-      // Bottom left to up
-      if (topPos<6) {
-        centerX = 300 - 44;
-        centerY = 600 - 44*topPos;
-      }
-
-      //Middle left to right
-      if (topPos>5 && topPos<10) {
-        centerX = 300 - (44* (topPos-4));
-        centerY = 600 - 44*5;
-      }
-
-      //middle left
-      if (topPos === 10) {
-        centerX = 300 - (44*5);
-        centerY = 600 - 44*6;
-      }
-
-      //middle left upper left to right
-      if (topPos>10 && topPos<16) {
-        centerX = 300 - (44*5) + ((topPos-11) * 44);
-        centerY = 600 - 44*7;
-      }
-
-      //top left bottom to up
-      if (topPos>15 && topPos<20) {
-        centerX = 300 - 44;
-        centerY = 600 - (44* (topPos-8));
-      }
-
-      //top
-      if (topPos === 20) {
-        centerX = 300;
-        centerY = 600 - 44*11;
-      }
-
-      //top right up to bottom
-      if (topPos>20 && topPos<25) {
-        centerX = 300 + 44;
-        centerY = 600 - (44*11) + ((topPos-21) * 44);
-      }
-
-      //middle right upper
-      if (topPos>24 && topPos<30) {
-        centerX = 300 + 44 + ((topPos-25) * 44);
-        centerY = 600 - (7*44);
-      }
-
-      //middle right
-      if (topPos === 30) {
-        centerX = 300 + (44*5);
-        centerY = 600 - 44*6;
-      }
-
-      //Middle left lower left to right
-      if (topPos>30 && topPos<36) {
-        centerX = 300 + (44*5) - (44* (topPos-31));
-        centerY = 600 - 44*5;
-      }
-
-      //bottom right up to down
-      if (topPos>35 && topPos<40) {
-        centerX = 300 + 44;
-        centerY = 600 - (44*4) + ((topPos-36) * 44);
-      }
-
-      //middle bottom
-      if (topPos === 40) {
-        centerX = 300;
-        centerY = 600 - 44;
-      }
-
-      //up to final
-      if (topPos>40  && topPos <45) {
-        centerX = 300;
-        centerY = 600 - 44*(topPos-39);
-      }
-
-      //final point
-      if (topPos === 45) {
-        centerX = 300;
-        centerY = 600 - 44*6;
-      }
-
-      //left middle points
-      if (topPos>45 && topPos<50) {
-        centerX = 300 - (44* (topPos-45));
-        centerY = 600 - 44*6;
-      }
-
-      //upper middle points
-      if (topPos>49 && topPos<54) {
-        centerX = 300;
-        centerY = 600 - (44* (topPos-43));
-      }
-
-      //right middle points
-      if (topPos>53) {
-        centerX = 300 + 44 + ((topPos-54) * 44);
-        centerY = 600 - (6*44);
-      }
+      //Get Bg circle x-position
+      centerX=getBgX(topPos);
+      //Get Bg circle y-position
+      centerY=getBgY(topPos);
 
       context.beginPath();
       context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
 
       //Add color for each circle , ecept for in final stage
-      if (topPos <41) {
-        if (topPos % 4 === 0) {
-          context.fillStyle = 'green';
-        }
-        if (topPos % 4 === 1) {
-          context.fillStyle = 'blue';
-        }
-        if (topPos % 4 === 2) {
-          context.fillStyle = 'red';
-        }
-        if (topPos % 4 === 3) {
-          context.fillStyle = 'yellow';
-        }
-      }
-
-      //Color for final stage
-      if (topPos>40 && topPos<45) {
-        context.fillStyle = 'blue';
-      }
-
-
-      //Colof for final position
-      if (topPos === 45) {
-        context.fillStyle = 'white';
-      }
-
-      //color for left middle positions
-      if (topPos > 45 && topPos < 50) {
-        context.fillStyle = 'yellow';
-      }
-
-      //color for upper middle positions
-      if (topPos > 49 && topPos <54) {
-        context.fillStyle = 'red';
-      }
-
-      //color for right  middle positions
-      if (topPos > 54 && topPos <58) {
-        context.fillStyle = 'green';
-      }
-
+      context.fillStyle = getBgColor(topPos);
 
       context.fill();
       context.lineWidth = 1;
       context.strokeStyle = '#003300';
       context.stroke();
     }
+  }
+
+  //get color for bgPositions
+  function getBgColor(pos) {
+    var color = 'white';
+    //outer part of bg , alter color for each position
+    if (pos <41) {
+      if (pos % 4 === 0) {color = 'green';}
+      if (pos % 4 === 1) {color = 'blue';}
+      if (pos % 4 === 2) {color = 'red';}
+      if (pos % 4 === 3) {color = 'yellow';}
+    }
+    //Color for the last 4 endpositions before end.
+    if (pos > 40 && pos <45) {color = 'blue'};
+    if (pos > 45 && pos <50) {color = 'yellow'};
+    if (pos > 49 && pos <54) {color = 'red'};
+    if (pos > 53 && pos <58) {color = 'green'};
+    return color;
+  }
+
+  //get x-position for the background circles
+  function getBgX(pos) {
+
+    var BgX = 0;
+    // Bottom left to up
+    if (pos<6) {BgX = 300 - 44;}
+
+    //Middle left to right
+    if (pos>5 && pos<10) {BgX = 300 - (44* (pos-4));}
+
+    //middle left
+    if (pos === 10) {BgX = 300 - (44*5);}
+
+    //middle left upper left to right
+    if (pos>10 && pos<16) {BgX = 300 - (44*5) + ((pos-11) * 44);}
+
+    //top left bottom to up
+    if (pos>15 && pos<20) {BgX = 300 - 44;}
+
+    //top
+    if (pos === 20) {BgX = 300;}
+
+    //top right up to bottom
+    if (pos>20 && pos<25) {BgX = 300 + 44;}
+
+    //middle right upper
+    if (pos>24 && pos<30) {BgX = 300 + 44 + ((pos-25) * 44);}
+
+    //middle right
+    if (pos === 30) {BgX = 300 + (44*5);}
+
+    //Middle left lower left to right
+    if (pos>30 && pos<36) {BgX = 300 + (44*5) - (44* (pos-31));}
+
+    //bottom right up to down
+    if (pos>35 && pos<40) {BgX = 300 + 44;}
+
+    //middle bottom
+    if (pos === 40) {BgX = 300;}
+
+    //up to final
+    if (pos>40  && pos <45) {BgX = 300;}
+
+    //final point
+    if (pos === 45) {BgX = 300;}
+
+    //left middle points
+    if (pos>45 && pos<50) {BgX = 300 - (44* (pos-45));}
+
+    //upper middle points
+    if (pos>49 && pos<54) {BgX = 300;}
+
+    //right middle points
+    if (pos>53) {BgX = 300 + 44 + ((pos-54) * 44);}
+
+    return BgX;
+  }
+
+  //get y-position for the background circles
+  function getBgY(pos) {
+
+    var BgY = 0;
+
+    // Bottom left to up
+    if (pos<6) {BgY = 600 - 44*pos;}
+
+    //Middle left to right
+    if (pos>5 && pos<10) {BgY = 600 - 44*5;}
+
+    //middle left
+    if (pos === 10) {BgY = 600 - 44*6;}
+
+    //middle left upper left to right
+    if (pos>10 && pos<16) {BgY = 600 - 44*7;}
+
+    //top left bottom to up
+    if (pos>15 && pos<20) {BgY = 600 - (44* (pos-8));}
+
+    //top
+    if (pos === 20) {BgY = 600 - 44*11;}
+
+    //top right up to bottom
+    if (pos>20 && pos<25) {BgY = 600 - (44*11) + ((pos-21) * 44);}
+
+    //middle right upper
+    if (pos>24 && pos<30) {BgY = 600 - (7*44);}
+
+    //middle right
+    if (pos === 30) {BgY = 600 - 44*6;}
+
+    //Middle left lower left to right
+    if (pos>30 && pos<36) {BgY = 600 - 44*5;
+    }
+
+    //bottom right up to down
+    if (pos>35 && pos<40) {BgY = 600 - (44*4) + ((pos-36) * 44);}
+
+    //middle bottom
+    if (pos === 40) {BgY = 600 - 44;}
+
+    //up to final
+    if (pos>40  && pos <45) {BgY = 600 - 44*(pos-39);}
+
+    //final point
+    if (pos === 45) {BgY = 600 - 44*6;}
+
+    //left middle points
+    if (pos>45 && pos<50) {BgY = 600 - 44*6;}
+
+    //upper middle points
+    if (pos>49 && pos<54) {BgY = 600 - (44* (pos-43));}
+
+    //right middle points
+    if (pos>53) {BgY = 600 - (6*44);}
+
+    return BgY;
   }
 
   //draw topcircle
@@ -235,105 +234,10 @@ $(document).ready(function(){
       centerX = 0;
       centerY = 0;
 
-      //The player is out on the field
-      if (topValue<6) {
-        centerX = 300 - 44;
-        centerY = 600 - 44*(topValue);
-      }
-      if (topValue>5 && topValue<10) {
-        centerX = 300 - (44* (topValue-4));
-        centerY = 600 - 44*5;
-      }
-
-      //middle left
-      if (topValue === 10) {
-        centerX = 300 - (44*5);
-        centerY = 600 - 44*6;
-      }
-
-      //middle left upper left to right
-      if (topValue>10 && topValue<16) {
-        centerX = 300 - (44*5) + ((topValue-11) * 44);
-        centerY = 600 - 44*7;
-      }
-
-      //top left bottom to up
-      if (topValue>15 && topValue<20) {
-        centerX = 300 - 44;
-        centerY = 600 - (44* (topValue-8));
-      }
-
-      //top
-      if (topValue === 20) {
-        centerX = 300;
-        centerY = 600 - 44*11;
-      }
-
-      //top right up to bottom
-      if (topValue>20 && topValue<25) {
-        centerX = 300 + 44;
-        centerY = 600 - (44*11) + ((topValue-21) * 44);
-      }
-
-      //middle right upper
-      if (topValue>24 && topValue<30) {
-        centerX = 300 + 44 + ((topValue-25) * 44);
-        centerY = 600 - (7*44);
-      }
-
-      //middle right
-      if (topValue === 30) {
-        centerX = 300 + (44*5);
-        centerY = 600 - 44*6;
-      }
-
-      //Middle left lower left to right
-      if (topValue>30 && topValue<36) {
-        centerX = 300 + (44*5) - (44* (topValue-31));
-        centerY = 600 - 44*5;
-      }
-
-      //bottom right up to down
-      if (topValue>35 && topValue<40) {
-        centerX = 300 + 44;
-        centerY = 600 - (44*4) + ((topValue-36) * 44);
-      }
-
-      //middle bottom
-      if (topValue === 40) {
-        centerX = 300;
-        centerY = 600 - 44;
-      }
-
-      //up to final
-      if (topValue>40  && topValue <45) {
-        centerX = 300;
-        centerY = 600 - 44*(topValue-39);
-      }
-
-      //final point
-      if (topValue === 45) {
-        centerX = 300;
-        centerY = 600 - 44*6;
-      }
-
-      //left middle points
-      if (topValue>45 && topValue<50) {
-        centerX = 300 - (44* (topValue-45));
-        centerY = 600 - 44*6;
-      }
-
-      //upper middle points
-      if (topValue>49 && topValue<54) {
-        centerX = 300;
-        centerY = 600 - (44* (topValue-43));
-      }
-
-      //right middle points
-      if (topValue>53) {
-        centerX = 300 + 44 + ((topValue-54) * 44);
-        centerY = 600 - (6*44);
-      }
+      //Calculate x-position
+      centerX=getBgX(topValue);
+      //Calculate y-position
+      centerY=getBgY(topValue);
 
       radius = 10;
     }
@@ -367,12 +271,16 @@ $(document).ready(function(){
 
   function checkForCollision(currentTop) {
     if (currentTop === 0) {
+      //If pas are equals
       if(pTop[0] === pTop[1]){
+        //start from pos 0
         pTop[1]=0;
       }
     }
     if (currentTop === 1) {
+      //If pas are equals
       if(pTop[1] === pTop[0]) {
+        //start from pos 0
         pTop[0]=0;
       }
     }
