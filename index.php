@@ -20,6 +20,7 @@
     <input id='roll1' type='button' value='Throw dice Yellow' />
     <input id='roll2' type='button' value='Throw dice Green' />
     <input id='roll3' type='button' value='Throw dice Red' />
+    <input id='roll4' type='button' value='Throw dice Blue' />    
     <label id='b1' class='dice one'></label>
 </p>
 </form>

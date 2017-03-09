@@ -6,16 +6,18 @@ $(document).ready(function(){
 
   'use strict';
 
-  var pTop = [0,0,0]; //pTop with start positions
+  var pTop = [0,0,0,0]; //pTop with start positions
   var pToplength = pTop.length;
 
   var posFinished = 45;
   var top1Color = "yellow";
   var top2Color = "green";
   var top3Color = "red";
+  var top4Color = "blue";
   var yellow1 = 0;
   var green1 = 1;
   var red1 = 2;
+  var blue1 = 3;
   var bgRadius = 20;
   var topRadius = 10;
   var posOutsidePlan = 0;
@@ -195,17 +197,24 @@ $(document).ready(function(){
     if(topValue===posOutsidePlan) {
       if (pos === yellow1) {
         centerY = 510;
+        centerX = 44*3;
         context.fillStyle = top1Color;
       }
       if (pos === green1) {
         centerY = 540;
+        centerX = 44*3;
         context.fillStyle = top2Color;
       }
       if (pos === red1) {
-        centerY = 570;
+        centerY = 510;
+        centerX = 44*4;
         context.fillStyle = top3Color;
       }
-      centerX = 44*3;
+      if (pos === blue1) {
+        centerY = 540;
+        centerX = 44*4;
+        context.fillStyle = top4Color;
+      }
     } else {
 
       //second position and up ihe game area
@@ -225,9 +234,16 @@ $(document).ready(function(){
 
       if (pos === red1) {
         //Clear position 0
-        context.clearRect(120, 558, 24, 24);
+        context.clearRect(164, 498, 24, 24);
         //Fill with top1Color
         context.fillStyle = top3Color;
+      }
+
+      if (pos === blue1) {
+        //Clear position 0
+        context.clearRect(164, 528, 24, 24);
+        //Fill with top1Color
+        context.fillStyle = top4Color;
       }
 
       //Calculate x-position
@@ -251,17 +267,9 @@ $(document).ready(function(){
       drawBgCircles();
       //draw top circle
       drawTopCircle(topValue,pos);
-
-    }
-    if (pos === green1){
-      //draw top circle
+    } else {
       drawTopCircle(topValue,pos);
     }
-    if (pos === red1){
-      //draw top circle
-      drawTopCircle(topValue,pos);
-    }
-
   }
 
   function checkForCollision(currentTop) {
@@ -275,6 +283,10 @@ $(document).ready(function(){
         //start from pos 0
         pTop[red1]=posOutsidePlan;
       }
+      if(pTop[yellow1] === pTop[blue1]){
+        //start from pos 0
+        pTop[blue1]=posOutsidePlan;
+      }
     }
     if (currentTop === green1) {
       //If pas are equals
@@ -286,6 +298,10 @@ $(document).ready(function(){
         //start from pos 0
         pTop[red1]=posOutsidePlan;
       }
+      if(pTop[yellow1] === pTop[blue1]){
+        //start from pos 0
+        pTop[blue1]=posOutsidePlan;
+      }
     }
     if (currentTop === red1) {
       //If pas are equals
@@ -296,6 +312,25 @@ $(document).ready(function(){
       if(pTop[red1] === pTop[yellow1]){
         //start from pos 0
         pTop[yellow1]=posOutsidePlan;
+      }
+      if(pTop[red1] === pTop[blue1]){
+        //start from pos 0
+        pTop[blue1]=posOutsidePlan;
+      }
+    }
+    if (currentTop === blue1) {
+      //If pas are equals
+      if(pTop[blue1] === pTop[green1]){
+        //start from pos 0
+        pTop[green1]=posOutsidePlan;
+      }
+      if(pTop[blue1] === pTop[yellow1]){
+        //start from pos 0
+        pTop[yellow1]=posOutsidePlan;
+      }
+      if(pTop[blue1] === pTop[red1]){
+        //start from pos 0
+        pTop[red1]=posOutsidePlan;
       }
     }
   }
@@ -310,6 +345,9 @@ $(document).ready(function(){
     }
     if (topNo === red1) {
       goElement.innerText = 'Game Over, Top Red won';
+    }
+    if (topNo === blue1) {
+      goElement.innerText = 'Game Over, Top Blue won';
     }
   }
 
@@ -341,7 +379,7 @@ $(document).ready(function(){
 
   function dice() {
 
-    var text,target, value;
+    var target, value;
 
     value = Pesu.random(1,6);
 
@@ -349,12 +387,12 @@ $(document).ready(function(){
     target.className='dice one';
 
     switch(value) {
-      case 1: target.className='dice one'; break;
-      case 2: target.className='dice two';break;
+      case 1: target.className='dice one';  break;
+      case 2: target.className='dice two';  break;
       case 3: target.className='dice three';break;
-      case 4: target.className='dice six';break;
-      case 5: target.className='dice four';break;
-      case 6: target.className='dice five';break;
+      case 4: target.className='dice six';  break;
+      case 5: target.className='dice four'; break;
+      case 6: target.className='dice five'; break;
     }
 
     return value;
@@ -374,51 +412,38 @@ $(document).ready(function(){
       //Display topvalue
       displayTop(pTop[i],i);
     }
-    //Stop on click
   }
 
+  //************Initial port
 
   //Declare variables.
   var mmi;
-  //Dice start image ,1
+
   mmi = document.getElementById('inoutput');
 
-  //When Throw dice 1 clicked on
+  //When Throw dice is clicked on
   mmi['roll1'].onclick = (function() {
-
-    //Handle top yellow1
     mainLoop(yellow1);
-
   });
-
-  //When Throw dice 2 is clicked on
   mmi['roll2'].onclick = (function() {
-
-    // Handle top green 1
     mainLoop(green1);
-
   });
-
-  //When Throw dice 3 is clicked on
   mmi['roll3'].onclick = (function() {
-
-    // Handle red 1
     mainLoop(red1);
-
+  });
+  mmi['roll4'].onclick = (function() {
+    mainLoop(blue1);
   });
 
-//display default top and default top value
-displayTop(posOutsidePlan,yellow1); //display top 0 value 0
-displayTop(posOutsidePlan,green1); //display top 1 value 0
-displayTop(posOutsidePlan,red1); //display top 2 value 0
+  var canvas = document.getElementById('canvas1');
 
-var canvas = document.getElementById('canvas1');
+  //Draw bgCircles
+  drawBgCircles();
 
-//Draw bgCircles
-drawBgCircles();
+  //draw top circle for tops in pos 0 (default)
+  for (var i = 0; i< pToplength;i++) {
+    drawTopCircle(posOutsidePlan,i);
+  }
+  // ********** End initial part
 
-//draw top circle for top 1 in pos 0 (default)
-drawTopCircle(posOutsidePlan,yellow1);
-drawTopCircle(posOutsidePlan,green1);
-drawTopCircle(posOutsidePlan,red1);
 });
