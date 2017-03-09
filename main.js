@@ -11,34 +11,21 @@ $(document).ready(function(){
 
   var posFinished = 45;
   var top1Color = "yellow";
-  var top2Color = "orange";
+  var top2Color = "green";
+  var yellow1 = 0;
+  var green1 = 1;
+  var bgRadius = 20;
+  var topRadius = 10;
+  var posOutsidePlan = 0;
 
-  function displayTop(posValue, pos) {
-    if (pos === 0) {
-      var topElement = document.getElementById('top');
-      topElement.innerText = "0";
-    }
-    if (pos === 1) {
-      var topElement = document.getElementById('top2');
-      topElement.innerText = "0";
-    }
-
-    if (posValue < 10) {
-      topElement.style.left = posValue * 12 +'px';
-    } else 	{
-      topElement.style.left = (((posValue -10) * 20) +122)  +'px';
-    }
-  }
 
   // Draw backgroundcircles
   function drawBgCircles() {
+    var centerX, centerY;
     var canvas = document.getElementById('canvas1');
 
     for (var topPos = 1; topPos<=57; topPos++) {
       var context = canvas.getContext('2d');
-      var centerX = 0;
-      var centerY = 0;
-      var radius = 20;
 
       //Get Bg circle x-position
       centerX=getBgX(topPos);
@@ -46,7 +33,7 @@ $(document).ready(function(){
       centerY=getBgY(topPos);
 
       context.beginPath();
-      context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+      context.arc(centerX, centerY, bgRadius, 0, 2 * Math.PI, false);
 
       //Add color for each circle , ecept for in final stage
       context.fillStyle = getBgColor(topPos);
@@ -79,171 +66,165 @@ $(document).ready(function(){
   //get x-position for the background circles
   function getBgX(pos) {
 
-    var BgX = 0;
+    var bgX = 0;
     // Bottom left to up
-    if (pos<6) {BgX = 300 - 44;}
+    if (pos<6) {bgX = 300 - 44;}
 
     //Middle left to right
-    if (pos>5 && pos<10) {BgX = 300 - (44* (pos-4));}
+    if (pos>5 && pos<10) {bgX = 300 - (44* (pos-4));}
 
     //middle left
-    if (pos === 10) {BgX = 300 - (44*5);}
+    if (pos === 10) {bgX = 300 - (44*5);}
 
     //middle left upper left to right
-    if (pos>10 && pos<16) {BgX = 300 - (44*5) + ((pos-11) * 44);}
+    if (pos>10 && pos<16) {bgX = 300 - (44*5) + ((pos-11) * 44);}
 
     //top left bottom to up
-    if (pos>15 && pos<20) {BgX = 300 - 44;}
+    if (pos>15 && pos<20) {bgX = 300 - 44;}
 
     //top
-    if (pos === 20) {BgX = 300;}
+    if (pos === 20) {bgX = 300;}
 
     //top right up to bottom
-    if (pos>20 && pos<25) {BgX = 300 + 44;}
+    if (pos>20 && pos<25) {bgX = 300 + 44;}
 
     //middle right upper
-    if (pos>24 && pos<30) {BgX = 300 + 44 + ((pos-25) * 44);}
+    if (pos>24 && pos<30) {bgX = 300 + 44 + ((pos-25) * 44);}
 
     //middle right
-    if (pos === 30) {BgX = 300 + (44*5);}
+    if (pos === 30) {bgX = 300 + (44*5);}
 
     //Middle left lower left to right
-    if (pos>30 && pos<36) {BgX = 300 + (44*5) - (44* (pos-31));}
+    if (pos>30 && pos<36) {bgX = 300 + (44*5) - (44* (pos-31));}
 
     //bottom right up to down
-    if (pos>35 && pos<40) {BgX = 300 + 44;}
+    if (pos>35 && pos<40) {bgX = 300 + 44;}
 
     //middle bottom
-    if (pos === 40) {BgX = 300;}
+    if (pos === 40) {bgX = 300;}
 
     //up to final
-    if (pos>40  && pos <45) {BgX = 300;}
+    if (pos>40  && pos <45) {bgX = 300;}
 
     //final point
-    if (pos === 45) {BgX = 300;}
+    if (pos === 45) {bgX = 300;}
 
     //left middle points
-    if (pos>45 && pos<50) {BgX = 300 - (44* (pos-45));}
+    if (pos>45 && pos<50) {bgX = 300 - (44* (pos-45));}
 
     //upper middle points
-    if (pos>49 && pos<54) {BgX = 300;}
+    if (pos>49 && pos<54) {bgX = 300;}
 
     //right middle points
-    if (pos>53) {BgX = 300 + 44 + ((pos-54) * 44);}
+    if (pos>53) {bgX = 300 + 44 + ((pos-54) * 44);}
 
-    return BgX;
+    return bgX;
   }
 
   //get y-position for the background circles
   function getBgY(pos) {
 
-    var BgY = 0;
+    var bgY = 0;
 
     // Bottom left to up
-    if (pos<6) {BgY = 600 - 44*pos;}
+    if (pos<6) {bgY = 600 - 44*pos;}
 
     //Middle left to right
-    if (pos>5 && pos<10) {BgY = 600 - 44*5;}
+    if (pos>5 && pos<10) {bgY = 600 - 44*5;}
 
     //middle left
-    if (pos === 10) {BgY = 600 - 44*6;}
+    if (pos === 10) {bgY = 600 - 44*6;}
 
     //middle left upper left to right
-    if (pos>10 && pos<16) {BgY = 600 - 44*7;}
+    if (pos>10 && pos<16) {bgY = 600 - 44*7;}
 
     //top left bottom to up
-    if (pos>15 && pos<20) {BgY = 600 - (44* (pos-8));}
+    if (pos>15 && pos<20) {bgY = 600 - (44* (pos-8));}
 
     //top
-    if (pos === 20) {BgY = 600 - 44*11;}
+    if (pos === 20) {bgY = 600 - 44*11;}
 
     //top right up to bottom
-    if (pos>20 && pos<25) {BgY = 600 - (44*11) + ((pos-21) * 44);}
+    if (pos>20 && pos<25) {bgY = 600 - (44*11) + ((pos-21) * 44);}
 
     //middle right upper
-    if (pos>24 && pos<30) {BgY = 600 - (7*44);}
+    if (pos>24 && pos<30) {bgY = 600 - (7*44);}
 
     //middle right
-    if (pos === 30) {BgY = 600 - 44*6;}
+    if (pos === 30) {bgY = 600 - 44*6;}
 
     //Middle left lower left to right
-    if (pos>30 && pos<36) {BgY = 600 - 44*5;
+    if (pos>30 && pos<36) {bgY = 600 - 44*5;
     }
 
     //bottom right up to down
-    if (pos>35 && pos<40) {BgY = 600 - (44*4) + ((pos-36) * 44);}
+    if (pos>35 && pos<40) {bgY = 600 - (44*4) + ((pos-36) * 44);}
 
     //middle bottom
-    if (pos === 40) {BgY = 600 - 44;}
+    if (pos === 40) {bgY = 600 - 44;}
 
     //up to final
-    if (pos>40  && pos <45) {BgY = 600 - 44*(pos-39);}
+    if (pos>40  && pos <45) {bgY = 600 - 44*(pos-39);}
 
     //final point
-    if (pos === 45) {BgY = 600 - 44*6;}
+    if (pos === 45) {bgY = 600 - 44*6;}
 
     //left middle points
-    if (pos>45 && pos<50) {BgY = 600 - 44*6;}
+    if (pos>45 && pos<50) {bgY = 600 - 44*6;}
 
     //upper middle points
-    if (pos>49 && pos<54) {BgY = 600 - (44* (pos-43));}
+    if (pos>49 && pos<54) {bgY = 600 - (44* (pos-43));}
 
     //right middle points
-    if (pos>53) {BgY = 600 - (6*44);}
+    if (pos>53) {bgY = 600 - (6*44);}
 
-    return BgY;
+    return bgY;
   }
 
   //draw topcircle
   function drawTopCircle(topValue,pos) {
     //Draw a top in a circle
-    var canvas, context,centerY,centerX,radius;
+    var canvas, context,centerY,centerX;
 
     canvas = document.getElementById('canvas1');
     context = canvas.getContext('2d');
 
     //first position outside the game-area
-    if(topValue===0) {
-      if (pos === 0) {
+    if(topValue===posOutsidePlan) {
+      if (pos === yellow1) {
         centerY = 510;
         context.fillStyle = top1Color;
       }
-      if (pos === 1) {
+      if (pos === green1) {
         centerY = 540;
         context.fillStyle = top2Color;
       }
       centerX = 44*3;
-      radius = 10;
     } else {
 
       //second position and up ihe game area
-      if (pos === 0) {
+      if (pos === yellow1) {
         //Clear position 0
         context.clearRect(120, 498, 24, 24);
         //Fill with top1Color
         context.fillStyle = top1Color;
       }
 
-      if (pos === 1) {
+      if (pos === green1) {
         //Clear position 0
         context.clearRect(120, 528, 24, 24);
         //Fill with top1Color
         context.fillStyle = top2Color;
       }
 
-      centerX = 0;
-      centerY = 0;
-
       //Calculate x-position
       centerX=getBgX(topValue);
       //Calculate y-position
       centerY=getBgY(topValue);
-
-      radius = 10;
     }
 
     context.beginPath();
-    context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    context.arc(centerX, centerY, topRadius, 0, 2 * Math.PI, false);
 
     context.fill();
     context.lineWidth = 0;
@@ -251,54 +232,50 @@ $(document).ready(function(){
     context.stroke();
   }
 
-  function displayTopValue(topValue,pos)  {
-    if (pos === 0) {
-      //  var toe = document.getElementById('topvalue');
-
+  function displayTop(topValue,pos)  {
+    if (pos === yellow1) {
       //Draw bgCircles
       drawBgCircles();
       //draw top circle
       drawTopCircle(topValue,pos);
 
     }
-    if (pos === 1){
-      //    var toe = document.getElementById('topvalue2');
+    if (pos === green1){
       //draw top circle
       drawTopCircle(topValue,pos);
     }
-    //  toe.innerText = topValue;
   }
 
   function checkForCollision(currentTop) {
-    if (currentTop === 0) {
+    if (currentTop === yellow1) {
       //If pas are equals
-      if(pTop[0] === pTop[1]){
+      if(pTop[yellow1] === pTop[green1]){
         //start from pos 0
-        pTop[1]=0;
+        pTop[green1]=posOutsidePlan;
       }
     }
-    if (currentTop === 1) {
+    if (currentTop === green1) {
       //If pas are equals
-      if(pTop[1] === pTop[0]) {
+      if(pTop[green1] === pTop[yellow1]) {
         //start from pos 0
-        pTop[0]=0;
+        pTop[yellow1]=posOutsidePlan;
       }
     }
   }
 
   function displayGOver(topNo)  {
     var goElement = document.getElementById('gameover');
-    if (topNo === 0) {
-      goElement.innerText = 'Game Over, Top 1 won';
+    if (topNo === yellow1) {
+      goElement.innerText = 'Game Over, Top Yellow won';
     }
-    if (topNo === 1) {
-      goElement.innerText = 'Game Over, Top 2 won';
+    if (topNo === green1) {
+      goElement.innerText = 'Game Over, Top Green won';
     }
   }
 
   function logics(topNo, dValue) {
     // Top is in field?
-    if (pTop[topNo] > 0) {
+    if (pTop[topNo] > posOutsidePlan) {
       //Can he move
       if (pTop[topNo] + dValue <= posFinished) {
         //Move Top
@@ -317,21 +294,21 @@ $(document).ready(function(){
         checkForCollision(topNo);
       } else {
         //If not value 1 or 6 we are still not in field
-        pTop[topNo] = 0;
+        pTop[topNo] = posOutsidePlan;
       }
     }
   }
 
-  // Main for handle each top
-  function handleTop(topNo) {
-    var text,target, dValue;
+  function dice() {
 
-    dValue = Pesu.random(1,6);
+    var text,target, value;
+
+    value = Pesu.random(1,6);
 
     target = document.getElementById('b1');
     target.className='dice one';
 
-    switch(dValue) {
+    switch(value) {
       case 1: target.className='dice one'; break;
       case 2: target.className='dice two';break;
       case 3: target.className='dice three';break;
@@ -340,14 +317,22 @@ $(document).ready(function(){
       case 6: target.className='dice five';break;
     }
 
+    return value;
+  }
+
+  // Main for handle each top
+  function mainLoop(topNo) {
+
+    // Get and display dice value
+    var dValue = dice();
+
     //Handle logics
     logics(topNo, dValue);
 
     //Display top
     for (var i = 0; i< pToplength;i++) {
-      //displayTop(pTop[i],i);
       //Display topvalue
-      displayTopValue(pTop[i],i);
+      displayTop(pTop[i],i);
     }
     //Stop on click
   }
@@ -361,8 +346,8 @@ $(document).ready(function(){
   //When Throw dice 1 clicked on
   mmi['roll1'].onclick = (function() {
 
-    //Handle top 0
-    handleTop(0);
+    //Handle top yellow1
+    mainLoop(yellow1);
 
   });
 
@@ -370,26 +355,13 @@ $(document).ready(function(){
   mmi['roll2'].onclick = (function() {
 
     // Handle top 1
-    handleTop(1);
+    mainLoop(green1);
 
   });
 
-  /*
-  // Display background
-  var bgElement = document.getElementById('background');
-  var lastpos = posFinished + 1;
-  var bgPositions = '';
-  for(var i = 0; i<lastpos; i++) {
-  bgPositions += " " + i;
-}
-bgElement.innerText = bgPositions;
-*/
-
 //display default top and default top value
-//displayTop(0,0);      //display top 0 pos 0
-displayTopValue(0,0); //display top 0 value 0
-//displayTop(0,1);      //display top 1 pos 0
-displayTopValue(0,1); //display top 1 value 0
+displayTop(posOutsidePlan,yellow1); //display top 0 value 0
+displayTop(posOutsidePlan,green1); //display top 1 value 0
 
 var canvas = document.getElementById('canvas1');
 
@@ -397,6 +369,6 @@ var canvas = document.getElementById('canvas1');
 drawBgCircles();
 
 //draw top circle for top 1 in pos 0 (default)
-drawTopCircle(0,0);
-drawTopCircle(0,1);
+drawTopCircle(posOutsidePlan,yellow1);
+drawTopCircle(posOutsidePlan,green1);
 });
