@@ -17,8 +17,9 @@
 
 <form id='inoutput'>
   <p>
-    <input id='roll1' type='button' value='Throw dice 1' />
-    <input id='roll2' type='button' value='Throw dice 2' />
+    <input id='roll1' type='button' value='Throw dice Yellow' />
+    <input id='roll2' type='button' value='Throw dice Green' />
+    <input id='roll3' type='button' value='Throw dice Red' />
     <label id='b1' class='dice one'></label>
 </p>
 </form>

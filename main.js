@@ -6,14 +6,16 @@ $(document).ready(function(){
 
   'use strict';
 
-  var pTop = [0,0]; //pTop with start positions
+  var pTop = [0,0,0]; //pTop with start positions
   var pToplength = pTop.length;
 
   var posFinished = 45;
   var top1Color = "yellow";
   var top2Color = "green";
+  var top3Color = "red";
   var yellow1 = 0;
   var green1 = 1;
+  var red1 = 2;
   var bgRadius = 20;
   var topRadius = 10;
   var posOutsidePlan = 0;
@@ -199,6 +201,10 @@ $(document).ready(function(){
         centerY = 540;
         context.fillStyle = top2Color;
       }
+      if (pos === red1) {
+        centerY = 570;
+        context.fillStyle = top3Color;
+      }
       centerX = 44*3;
     } else {
 
@@ -215,6 +221,13 @@ $(document).ready(function(){
         context.clearRect(120, 528, 24, 24);
         //Fill with top1Color
         context.fillStyle = top2Color;
+      }
+
+      if (pos === red1) {
+        //Clear position 0
+        context.clearRect(120, 558, 24, 24);
+        //Fill with top1Color
+        context.fillStyle = top3Color;
       }
 
       //Calculate x-position
@@ -244,6 +257,11 @@ $(document).ready(function(){
       //draw top circle
       drawTopCircle(topValue,pos);
     }
+    if (pos === red1){
+      //draw top circle
+      drawTopCircle(topValue,pos);
+    }
+
   }
 
   function checkForCollision(currentTop) {
@@ -253,10 +271,29 @@ $(document).ready(function(){
         //start from pos 0
         pTop[green1]=posOutsidePlan;
       }
+      if(pTop[yellow1] === pTop[red1]){
+        //start from pos 0
+        pTop[red1]=posOutsidePlan;
+      }
     }
     if (currentTop === green1) {
       //If pas are equals
       if(pTop[green1] === pTop[yellow1]) {
+        //start from pos 0
+        pTop[yellow1]=posOutsidePlan;
+      }
+      if(pTop[yellow1] === pTop[red1]){
+        //start from pos 0
+        pTop[red1]=posOutsidePlan;
+      }
+    }
+    if (currentTop === red1) {
+      //If pas are equals
+      if(pTop[red1] === pTop[green1]){
+        //start from pos 0
+        pTop[green1]=posOutsidePlan;
+      }
+      if(pTop[red1] === pTop[yellow1]){
         //start from pos 0
         pTop[yellow1]=posOutsidePlan;
       }
@@ -270,6 +307,9 @@ $(document).ready(function(){
     }
     if (topNo === green1) {
       goElement.innerText = 'Game Over, Top Green won';
+    }
+    if (topNo === red1) {
+      goElement.innerText = 'Game Over, Top Red won';
     }
   }
 
@@ -354,14 +394,23 @@ $(document).ready(function(){
   //When Throw dice 2 is clicked on
   mmi['roll2'].onclick = (function() {
 
-    // Handle top 1
+    // Handle top green 1
     mainLoop(green1);
+
+  });
+
+  //When Throw dice 3 is clicked on
+  mmi['roll3'].onclick = (function() {
+
+    // Handle red 1
+    mainLoop(red1);
 
   });
 
 //display default top and default top value
 displayTop(posOutsidePlan,yellow1); //display top 0 value 0
 displayTop(posOutsidePlan,green1); //display top 1 value 0
+displayTop(posOutsidePlan,red1); //display top 2 value 0
 
 var canvas = document.getElementById('canvas1');
 
@@ -371,4 +420,5 @@ drawBgCircles();
 //draw top circle for top 1 in pos 0 (default)
 drawTopCircle(posOutsidePlan,yellow1);
 drawTopCircle(posOutsidePlan,green1);
+drawTopCircle(posOutsidePlan,red1);
 });
