@@ -26,7 +26,6 @@ $(document).ready(function(){
   // Draw backgroundcircles
   function drawBgCircles() {
     var centerX, centerY;
-    var canvas = document.getElementById('canvas1');
 
     for (var topPos = 1; topPos<=57; topPos++) {
       var context = canvas.getContext('2d');
