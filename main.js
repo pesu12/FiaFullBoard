@@ -7,6 +7,7 @@ $(document).ready(function(){
   'use strict';
 
   var pTop = [0,0,0,0]; //pTop with start positions
+  var pTopOffsetPos = [10,30,20,0];
   var pToplength = pTop.length;
 
   var posFinished = 45;
@@ -367,7 +368,7 @@ $(document).ready(function(){
     } else {
       // Is value 1 or 6
       if (dValue === 1 || dValue === 6) {
-        pTop[topNo] = dValue + pTop[topNo];
+        pTop[topNo] = dValue + pTop[topNo] + pTopOffsetPos[topNo];
         checkForCollision(topNo);
       } else {
         //If not value 1 or 6 we are still not in field
