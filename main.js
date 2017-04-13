@@ -135,7 +135,6 @@ $(document).ready(function(){
 
     //Middle left to right
     if (pos>5 && pos<10) {bgY = 600 - 44*5;}
-
     //middle left
     if (pos === 10) {bgY = 600 - 44*6;}
 
@@ -353,17 +352,41 @@ $(document).ready(function(){
 
   function logics(topNo, dValue) {
     // Top is in field?
+    var inLastRound = false;
     if (pTop[topNo] > posOutsidePlan) {
       //Can he move
       if (pTop[topNo] + dValue <= posFinished) {
+        //For yellow, when position is more than 10 then go to middlr.
+        if((topNo===yellow1) && (pTop[topNo]>4) && (pTop[topNo]<11)) {
+            if((pTop[topNo]===5) && (dValue > 5)) {pTop[topNo] = 49;inLastRound = true};
+            if((pTop[topNo]===6) && (dValue > 4)) {pTop[topNo] = 49;inLastRound = true};
+            if((pTop[topNo]===7) && (dValue > 3)) {pTop[topNo] = 49;inLastRound = true};
+            if((pTop[topNo]===8) && (dValue > 2)) {pTop[topNo] = 49;inLastRound = true};
+            if((pTop[topNo]===9) && (dValue > 1)) {pTop[topNo] = 49;inLastRound = true};
+            if((pTop[topNo]===10) && (dValue > 0)) {pTop[topNo] = 49;inLastRound = true};
+        }
         //Move Top
-        pTop[topNo] = pTop[topNo] + dValue;
+        if(inLastRound === false) {
+           pTop[topNo] = pTop[topNo] + dValue;
+        }
+        //Calculate where top color goes to the middle
+        //For yellow, red and green, pass the blue part.
+        if(topNo===yellow1 || topNo===red1 || topNo === green1) {
+          if(pTop[topNo]>40 &&pTop[topNo]<46) {
+            pTop[topNo] = pTop[topNo] -40;
+            dValue = 0;
+          }
+        }
         checkForCollision(topNo);
         // Is he finish?
         if (pTop[topNo] === posFinished) {
           displayGOver(topNo);
         }
       }
+      console.log(" inLastRound");
+      console.log(inLastRound);
+      console.log("pTop[topNo]");
+      console.log(pTop[topNo]);
       // No, top not in field
     } else {
       // Is value 1 or 6
