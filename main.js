@@ -114,7 +114,7 @@ $(document).ready(function(){
     if (pos === 45) {bgX = 300;}
 
     //left middle points
-    if (pos>45 && pos<50) {bgX = 300 - (44* (pos-45));}
+    if (pos>45 && pos<50) {bgX = 300 - (44*5) + ((pos-45) * 44);}
 
     //upper middle points
     if (pos>49 && pos<54) {bgX = 300;}
@@ -354,17 +354,53 @@ $(document).ready(function(){
     // Top is in field?
     var inLastRound = false;
     if (pTop[topNo] > posOutsidePlan) {
+      //For yellow, when position is more than 10 then go to middlr.
+      if((topNo===yellow1) && (pTop[topNo]>4) && (pTop[topNo]<11)) {
+          if((pTop[topNo]===5) && (dValue > 5)) {pTop[topNo] = 45 + dValue - 5;inLastRound = true};
+          if((pTop[topNo]===6) && (dValue > 4)) {pTop[topNo] = 45 + dValue - 4;inLastRound = true};
+          if((pTop[topNo]===7) && (dValue > 3)) {pTop[topNo] = 45 + dValue - 3;inLastRound = true};
+          if((pTop[topNo]===8) && (dValue > 2)) {pTop[topNo] = 45 + dValue - 2;inLastRound = true};
+          if((pTop[topNo]===9) && (dValue > 1) && (dValue < 6)) {
+            pTop[topNo] = 45 + dValue - 1;
+            inLastRound = true
+          };
+          //If going from 9th position direct to finish
+          if((pTop[topNo]===9) && (dValue === 6)) {
+            pTop[topNo] = posFinished;
+            inLastRound = true;
+            displayGOver(topNo);
+          };
+          if((pTop[topNo]===10) && (dValue > 0) && (dValue < 5)) {
+            pTop[topNo] = 45 + dValue - 0;
+            inLastRound = true;
+          };
+          //If going from 10th position direct to finish
+          if((pTop[topNo]===10) && (dValue === 5)) {
+            pTop[topNo] = posFinished;
+            inLastRound = true;
+            displayGOver(topNo);
+          };
+          //If going from 10th position direct to finish + 1 , do nothing
+          if((pTop[topNo]===10) && (dValue === 6)) {
+            inLastRound = true;
+          }
+      }
+      // yellow final line and second or more throw.
+      if((topNo===yellow1) && (pTop[topNo]>45) && (pTop[topNo]<50) && inLastRound === false) {
+           //If not finis, then go forward
+           if (pTop[topNo] + dValue<50) {
+              pTop[topNo] = pTop[topNo] + dValue;
+           }
+           //If finish
+           else if (pTop[topNo] + dValue === 50) {
+              pTop[topNo] = posFinished;
+              displayGOver(topNo);
+           }
+           inLastRound = true;
+      }
+
       //Can he move
       if (pTop[topNo] + dValue <= posFinished) {
-        //For yellow, when position is more than 10 then go to middlr.
-        if((topNo===yellow1) && (pTop[topNo]>4) && (pTop[topNo]<11)) {
-            if((pTop[topNo]===5) && (dValue > 5)) {pTop[topNo] = 49;inLastRound = true};
-            if((pTop[topNo]===6) && (dValue > 4)) {pTop[topNo] = 49;inLastRound = true};
-            if((pTop[topNo]===7) && (dValue > 3)) {pTop[topNo] = 49;inLastRound = true};
-            if((pTop[topNo]===8) && (dValue > 2)) {pTop[topNo] = 49;inLastRound = true};
-            if((pTop[topNo]===9) && (dValue > 1)) {pTop[topNo] = 49;inLastRound = true};
-            if((pTop[topNo]===10) && (dValue > 0)) {pTop[topNo] = 49;inLastRound = true};
-        }
         //Move Top
         if(inLastRound === false) {
            pTop[topNo] = pTop[topNo] + dValue;
